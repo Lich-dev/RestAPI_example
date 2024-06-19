@@ -1,4 +1,5 @@
 using Microsoft.OpenApi.Models;
+using RestAPIexample.DB;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,5 +26,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapGet("/", () => "Hello World!");
+
+app.MapGet("/products/{id}", (int id) => ProductDB.GetProduct(id));
+app.MapGet("/products", () => ProductDB.GetProducts());
+app.MapPost("/products", (Product product) => ProductDB.CreateProduct(product));
+app.MapPut("/products", (Product product) => ProductDB.UpdateProduct(product));
+app.MapDelete("/products/{id}", (int id) => ProductDB.RemoveProduct(id));
 
 app.Run();
